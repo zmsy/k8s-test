@@ -1,4 +1,5 @@
 import express from "express";
+import client from "./redis";
 
 class App {
   public express: express.Express;
@@ -13,6 +14,16 @@ class App {
     router.get('/', (req, res) => {
       res.send("Hello world!");
     });
+    router.get('/visits', (req, res) => {
+      client.get("visits", (err, visits) => {
+        let visitsInt: number = parseInt(visits);
+        if (err) {
+          res.send("Error occurred! Could not get visit count.");
+        }
+        res.send("Number of visits: " + visitsInt);
+        client.set('visits', (visitsInt + 1).toString());
+      })
+    })
     return router;
   }
 }
