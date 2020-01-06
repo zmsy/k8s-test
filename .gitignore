@@ -12,6 +12,7 @@ coverage
 
 # Dependency directory
 node_modules
+frontend/node_modules
 
 # OS metadata
 .DS_Store
